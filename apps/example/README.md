@@ -1,3 +1,0 @@
-# example
-
-Remove this forder

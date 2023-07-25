@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "preserveConstEnums": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "moduleResolution": "Node",
+    "skipLibCheck": true,
+    "outDir": "./build",
+    "baseUrl": "src",
+    "paths": {
+      "@types": ["types/index"],
+      "@structures/*": ["structures/*"],
+      "@managers/*": ["managers/*"],
+      "@utils/*": ["utils/*"]
+    },
+    "inlineSourceMap": true
+  },
+  "ts-node": {
+    "esm": true
+  },
+  "tsc-alias": {
+    "resolveFullPaths": true
+  },
+  "include": ["./src/**/*.ts"],
+  "exclude": ["./src/**/example.config.ts", "./build/*"]
+}
