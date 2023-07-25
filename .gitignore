@@ -1,0 +1,33 @@
+# Packages
+node_modules/
+
+# Log files
+logs/
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Env
+.env
+
+# Dist
+dist/
+
+# Miscellaneous
+.tmp/
+.turbo
+.idea/
+.DS_Store
+
+# yarn
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
