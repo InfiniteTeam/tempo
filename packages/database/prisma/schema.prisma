@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id
+
+  voice         VoiceCount[]
+  message       MessageCount[]
+  ActivityCount ActivityCount[]
+}
+
+model VoiceCount {
+  time        DateTime @default(now()) @db.Timestamptz()
+  channelName String   @default("")
+  value       Int
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, time])
+  @@index([time(sort: Desc)])
+}
+
+model MessageCount {
+  time   DateTime @default(now()) @db.Timestamptz()
+  userId String
+  count  Int
+  user   User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, time])
+  @@index([time(sort: Desc)])
+}
+
+model ActivityCount {
+  time   DateTime     @default(now()) @db.Timestamptz()
+  userId String
+  count  Int
+  status ActiveStatus
+  user   User         @relation(fields: [userId], references: [id])
+
+  @@unique([userId, time])
+  @@index([time(sort: Desc)])
+}
+
+enum ActiveStatus {
+  Online
+  DoNotDisturb
+  Idle
+  Offline
+}

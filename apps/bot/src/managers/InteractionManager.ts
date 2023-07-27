@@ -1,7 +1,7 @@
 import { dirname, resolve } from 'path'
 import BotClient from '@structures/BotClient'
 import { BaseInteraction } from '@structures/Interaction'
-import Logger from '@utils/Logger'
+import { Logger } from '@tempo/utils'
 import BaseManager from './BaseManager.js'
 import { Interaction } from 'discord.js'
 import ErrorManager from './ErrorManager.js'
@@ -59,17 +59,21 @@ export default class InteractionManager extends BaseManager {
   }
 
   public get(customId: string): BaseInteraction | undefined {
+    this.logger.debug('GET ', customId)
+    const found = this.interactions.get(customId)
+    if (found) {
+      this.logger.debug('GET HIT ', customId)
+      return found
+    }
     return this.interactions.find((_, id) => {
-      if (typeof id === 'string' && id === customId) return true
-
-      id.includes(customId)
+      if (typeof id === 'string') id.startsWith(customId)
+      this.logger.debug('FIND HIT ', customId)
+      return id.includes(customId)
     })
   }
 
-  public async cacheEvent(interaction: Interaction) {
+  public async cacheEvent(interaction: Interaction<'cached'>) {
     const errorManager = new ErrorManager(this.client)
-
-    if (!interaction.inCachedGuild()) return
 
     if (interaction.isButton()) {
       const interactionData = this.get(interaction.customId)

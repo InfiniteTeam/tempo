@@ -1,7 +1,8 @@
-import Logger from '@utils/Logger'
+import { Logger } from '@tempo/utils'
 import BaseManager from './BaseManager.js'
 import BotClient from '@structures/BotClient'
-import { PrismaClient } from '@prisma/client'
+import { DatabaseClient } from '@tempo/database'
+import { join } from 'path'
 
 /**
  * @extends {BaseManager}
@@ -18,10 +19,8 @@ export default class DatabaseManager extends BaseManager {
   async load() {
     this.logger.debug('Using Prisma...')
 
-    this.client.db = new PrismaClient()
-
-    this.client.db.$connect().then(() => {
-      this.logger.info('Connected to Prisma')
+    this.client.db = new DatabaseClient({
+      loggerPath: join(process.cwd(), 'logs', 'latest.log')
     })
   }
 }

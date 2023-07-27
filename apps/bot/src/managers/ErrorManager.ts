@@ -1,7 +1,7 @@
 import { Guild, WebhookClient } from 'discord.js'
 import BaseManager from './BaseManager.js'
 import Embed from '@utils/Embed'
-import Logger from '@utils/Logger'
+import { Logger } from '@tempo/utils'
 import { v4 } from 'uuid'
 import { ErrorReportOptions } from '@types'
 import BotClient from '@structures/BotClient'

@@ -20,7 +20,8 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "tsup": "^7.1.0"
+    "tsup": "^7.1.0",
+    "eslint-config-tempo": "workspace:^"
   },
   "engines": {
     "node": ">=18"

@@ -1,0 +1,31 @@
+diff --git a/package.json b/package.json
+index 449b8a6b175da8090986ae7793a21df81b27069d..42758404d9199b56bbede4abb27693f6b5bcaa86 100644
+--- a/package.json
++++ b/package.json
+@@ -41,8 +41,8 @@
+     "@angular-eslint/template-parser": "^16.0.1",
+     "@next/eslint-plugin-next": "^13.4.1",
+     "@rushstack/eslint-patch": "^1.2.0",
+-    "@typescript-eslint/eslint-plugin": "^5.59.2",
+-    "@typescript-eslint/parser": "^5.59.2",
++    "@typescript-eslint/eslint-plugin": "^6.2.0",
++    "@typescript-eslint/parser": "^6.2.0",
+     "astro-eslint-parser": "^0.13.3",
+     "eslint-config-prettier": "^8.8.0",
+     "eslint-import-resolver-typescript": "^3.5.5",
+@@ -69,12 +69,12 @@
+     "vue-eslint-parser": "^9.2.1"
+   },
+   "devDependencies": {
+-    "eslint": "^8.40.0",
++    "eslint": "^8.45.0",
+     "husky": "^8.0.3",
+     "is-ci": "^3.0.1",
+     "pinst": "^3.0.0",
+-    "prettier": "^2.8.8",
+-    "typescript": "^5.0.4"
++    "prettier": "^3.0.0",
++    "typescript": "^5.1.6"
+   },
+   "engines": {
+     "node": ">=16.0.0"

@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: tempo-bot
+    environment:
+      - SHELL=bash
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:helloworld@database/tempo
+    env_file:
+      - .env
+    networks:
+      - tempo
+    build:
+      context: .
+      dockerfile: apps/bot/Dockerfile
+  database:
+    image: timescale/timescaledb:latest-pg13
+    container_name: tempo-db
+    environment:
+      POSTGRES_PASSWORD: helloworld
+    networks:
+      - tempo
+    volumes:
+      - database_data:/var/lib/postgresql/data
+    restart: always
+
+networks:
+  tempo:
+
+volumes:
+  database_data:

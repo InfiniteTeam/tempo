@@ -1,13 +1,13 @@
 import { execSync } from 'child_process'
 import { IConfig } from '@types'
-import { LevelType, ReportType } from './utils/Constants.js'
+import { ReportType } from './utils/Constants.js'
 
 const config: IConfig = {
   BUILD_NUMBER: execSync('git rev-parse --short HEAD').toString().trim(),
   BUILD_VERSION: '0.1.5',
-  devGuildID: '',
+  channelId: '',
   githubToken: '',
-  name: 'DJS Template',
+  name: 'Tempo',
   bot: {
     sharding: false,
     options: {
@@ -28,10 +28,6 @@ const config: IConfig = {
       guildID: '',
       channelID: ''
     }
-  },
-  logger: {
-    level: LevelType.Info,
-    dev: false
   }
 }
 

@@ -2,18 +2,72 @@
   "$schema": "https://turborepo.org/schema.json",
   "pipeline": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**", "build/**", "lib/**", ".next/**"],
-      "cache": true
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        "build/**",
+        "lib/**",
+        ".next/**"
+      ],
+      "cache": true,
+      "env": [
+        "PORT",
+        "DATABASE_URL",
+        "SHADOW_DATABASE_URL",
+        "REDIS_URL"
+      ]
     },
     "lint": {
-      "outputs": []
+      "inputs": [
+        "**/.eslintignore",
+        "**/.eslintrc.json",
+        "**/.prettierignore",
+        "**/.prettierrc.json",
+        "**/tsconfig.eslint.json",
+        "src/**/*.tsx",
+        "src/**/*.ts",
+        "src/**/*.css",
+        "src/**/*.js",
+        "src/**/*.mjs",
+        ".prettierrc.js",
+        ".prettierrc.cjs",
+        "next.config.js"
+      ],
+      "outputs": [],
+      "outputMode": "errors-only"
+    },
+    "format": {
+      "inputs": [
+        "**/.eslintignore",
+        "**/.eslintrc.json",
+        "**/.prettierignore",
+        "**/.prettierrc.json",
+        "**/tsconfig.eslint.json",
+        "src/**/*.tsx",
+        "src/**/*.ts",
+        "src/**/*.css",
+        "src/**/*.js",
+        "src/**/*.mjs",
+        ".prettierrc.js",
+        ".prettierrc.cjs",
+        "next.config.js"
+      ],
+      "outputs": [],
+      "outputMode": "errors-only"
     },
     "dev": {
+      "dependsOn": [
+        "@tempo/database#db:generate"
+      ],
       "cache": false
     },
-    "test": {
-      "cache": true
+    "db:generate": {
+      "cache": false
+    },
+    "db:push": {
+      "cache": false
     }
   }
 }

@@ -1,9 +1,8 @@
-import { PrismaClient } from '@prisma/client'
 import { Client, ClientOptions, ClientEvents, Collection } from 'discord.js'
 import { config as dotenvConfig } from 'dotenv'
 import * as Dokdo from 'dokdo'
 
-import Logger from '@utils/Logger'
+import { Logger } from '@tempo/utils'
 
 import { BaseCommand } from '@types'
 import { BaseInteraction } from './Interaction.js'
@@ -16,6 +15,9 @@ import EventManager from '@managers/EventManager'
 import ErrorManager from '@managers/ErrorManager'
 import DatabaseManager from '@managers/DatabaseManager'
 import InteractionManager from '@managers/InteractionManager'
+import { DatabaseClient } from '@tempo/database'
+import MessageManager from '@managers/MessageManager.js'
+import VoiceManager from '@managers/VoiceManager.js'
 
 const logger = new Logger('Bot')
 
@@ -30,13 +32,16 @@ export default class BotClient extends Client {
   public errors: Collection<string, string> = new Collection()
   public interactions: Collection<string | string[], BaseInteraction> =
     new Collection()
-  public db!: PrismaClient
+  public db!: DatabaseClient
 
   public command: CommandManager = new CommandManager(this)
   public event: EventManager = new EventManager(this)
   public error: ErrorManager = new ErrorManager(this)
   public database: DatabaseManager = new DatabaseManager(this)
   public interaction: InteractionManager = new InteractionManager(this)
+  public message: MessageManager = new MessageManager(this)
+  public voicem: VoiceManager = new VoiceManager(this)
+
   public eval = new Dokdo.Client(this, {
     prefix: this.config.bot.prefix,
     noPerm: async (message) =>

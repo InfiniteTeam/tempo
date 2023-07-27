@@ -3,7 +3,7 @@ import type BotClient from '@structures/BotClient'
 import { readdirSync } from 'fs'
 import { dirname, join } from 'path'
 import { Event } from '@structures/Event'
-import Logger from '@utils/Logger'
+import { Logger } from '@tempo/utils'
 import BaseManager from './BaseManager.js'
 import { fileURLToPath } from 'url'
 

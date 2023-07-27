@@ -1,23 +1,28 @@
-FROM node:16-alpine
+FROM node:18 AS Builder
 
 WORKDIR /app
 
-RUN apk update && apk upgrade && \
-    apk add --no-cache bash git openssh python3 build-base
+COPY package.json ./
+COPY turbo.json ./
+COPY yarn.lock ./
+COPY .yarnrc.yml ./
+COPY .yarn/ ./.yarn/
 
-COPY package.json /app/
-COPY yarn.lock /app/
-COPY .yarn/ /app/.yarn/
-COPY .yarnrc.yml /app/
+COPY apps/server/package.json ./apps/server/package.json
+
+COPY packages/ ./packages/
 
 RUN yarn install
-RUN yarn cache clean
 
-COPY . /app/
+COPY apps/server ./apps/server/
 
-RUN yarn build
-RUN yarn generate
+RUN yarn build --filter=bot
 
-RUN rm src/ -rf
+FROM node:18-alpine AS Server
 
-CMD yarn start:node
+WORKDIR /app
+
+COPY --from=Builder /app/apps/server/dist/ ./dist
+COPY --from=Builder /app/apps/server/package.json .
+
+CMD ["node", "./dist/index.js"]

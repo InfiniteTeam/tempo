@@ -6,7 +6,7 @@ import {
 } from 'discord.js'
 import { BaseCommand as Command, InteractionData } from '@types'
 
-import Logger from '@utils/Logger'
+import { Logger } from '@tempo/utils'
 import BaseManager from './BaseManager.js'
 import fs from 'fs'
 import path, { dirname } from 'path'

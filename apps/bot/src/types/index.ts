@@ -9,7 +9,7 @@ import {
   AnySelectMenuInteraction,
   ShardingManagerOptions
 } from 'discord.js'
-import { ReportType, LevelType } from '@utils/Constants'
+import { ReportType } from '@utils/Constants'
 
 export interface ErrorReportOptions {
   executer?:
@@ -26,17 +26,12 @@ export interface ErrorReportOptions {
 export type IConfig = {
   BUILD_VERSION: string
   BUILD_NUMBER: string
-  devGuildID: string
+  channelId: string
   name: string
   githubToken?: string
   repository?: string
-} & { logger: LoggerConfig } & { bot: BotConfig } & {
+} & { bot: BotConfig } & {
   report: ErrorReportConfig
-}
-
-export interface LoggerConfig {
-  level: LevelType
-  dev: boolean
 }
 
 export interface ErrorReportConfig {

@@ -6,9 +6,12 @@
     "build:apps": "turbo run build --filter '!./packages/*'",
     "lint": "turbo run lint",
     "format": "turbo run format",
-    "dev": "turbo run dev",
+    "dev": "turbo run dev --parallel",
     "postinstall": "is-ci || husky install",
     "update": "yarn upgrade-interactive",
+    "generate": "turbo run db:generate",
+    "db:push": "turbo run db:push",
+    "db:migrate-dev": "turbo run db:migrate-dev",
     "create-package": "turbo gen"
   },
   "packageManager": "yarn@3.6.1",
@@ -33,8 +36,8 @@
     "eslint-config-neon@^0.1.47": "patch:eslint-config-neon@npm%3A0.1.47#./.yarn/patches/eslint-config-neon-npm-0.1.47-6e2f4c3d60.patch"
   },
   "workspaces": [
-    "apps/**",
-    "packages/**"
+    "apps/*",
+    "packages/*"
   ],
   "private": true
 }
