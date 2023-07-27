@@ -1,5 +1,12 @@
 version: '3.8'
 
+networks:
+  tempo:
+
+volumes:
+  database_data:
+  cache_data:
+
 services:
   app:
     container_name: tempo-bot
@@ -7,6 +14,7 @@ services:
       - SHELL=bash
       - NODE_ENV=production
       - DATABASE_URL=postgresql://postgres:helloworld@database/tempo
+      - REDIS_URL=redis://cache:6379
     env_file:
       - .env
     networks:
@@ -14,6 +22,7 @@ services:
     build:
       context: .
       dockerfile: apps/bot/Dockerfile
+
   database:
     image: timescale/timescaledb:latest-pg13
     container_name: tempo-db
@@ -25,8 +34,11 @@ services:
       - database_data:/var/lib/postgresql/data
     restart: always
 
-networks:
-  tempo:
-
-volumes:
-  database_data:
+  cache:
+    image: 'docker.dragonflydb.io/dragonflydb/dragonfly'
+    ulimits:
+      memlock: -1
+    volumes:
+      - cache_data:/data
+    networks:
+      - tempo

@@ -1278,6 +1278,7 @@ __metadata:
     eslint-config-tempo: "workspace:^"
     ioredis: ^5.3.2
     prisma: ^5.0.0
+    tsconfig: "workspace:^"
     tsup: ^7.1.0
   languageName: unknown
   linkType: soft
@@ -1288,6 +1289,7 @@ __metadata:
   dependencies:
     eslint-config-tempo: "workspace:^"
     rotating-file-stream: ^3.1.1
+    tsconfig: "workspace:^"
     tslog: ^4.8.2
     tsup: ^7.1.0
   languageName: unknown
@@ -1342,9 +1344,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@turbo/gen@npm:^1.10.11":
-  version: 1.10.11
-  resolution: "@turbo/gen@npm:1.10.11"
+"@turbo/gen@npm:^1.10.12":
+  version: 1.10.12
+  resolution: "@turbo/gen@npm:1.10.12"
   dependencies:
     chalk: 2.4.2
     commander: ^10.0.0
@@ -1359,7 +1361,7 @@ __metadata:
     validate-npm-package-name: ^5.0.0
   bin:
     gen: dist/cli.js
-  checksum: 87ecd931a05f1683454d42864fa6f0c3118a3201a13b23de69c6389f4b966c704b72f34da88bc19442956d41e8b205d92172e55a8e8ece341cddadfd79336c75
+  checksum: 1e83e230a26d6f68c8d0e99dbf16fc9e7dcbe1cfd6522cf1a7b7bf9027e33055ff3bba9048086fe3b4976d311fa6c73ff2e2101aa00bf4b339d33321206bc431
   languageName: node
   linkType: hard
 
@@ -2375,6 +2377,7 @@ __metadata:
     nodemon: ^3.0.1
     rotating-file-stream: ^3.1.1
     tsc-alias: ^1.8.7
+    tsconfig: "workspace:^"
     tslog: ^4.8.2
     tsx: ^3.12.7
     typescript: ^5.1.6
@@ -3382,7 +3385,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dokdo@npm:^1.0.1":
+"dokdo@npm:1.0.1":
   version: 1.0.1
   resolution: "dokdo@npm:1.0.1"
   dependencies:
@@ -3390,6 +3393,17 @@ __metadata:
   peerDependencies:
     discord.js: 14
   checksum: 33ca7efe32091ca9ece11076f9817fbc66cdc6c8293574ca38c0bb07c8c30df091f6b20eaf186dcd9ddd4d6117fae41841dd5644ba455817381cb2e43a0d1590
+  languageName: node
+  linkType: hard
+
+"dokdo@patch:dokdo@npm%3A1.0.1#./.yarn/patches/dokdo-npm-1.0.1-3b43b27044.patch::locator=main%40workspace%3A.":
+  version: 1.0.1
+  resolution: "dokdo@patch:dokdo@npm%3A1.0.1#./.yarn/patches/dokdo-npm-1.0.1-3b43b27044.patch::version=1.0.1&hash=10edc7&locator=main%40workspace%3A."
+  dependencies:
+    node-fetch: ^2.6.7
+  peerDependencies:
+    discord.js: 14
+  checksum: e40c00142103c42458af46651cf68c88f9c4b7a52b4baf451213886726d3d5b2ceb09ce1a1386d12fc1e095f5cbd0c2e2f6436ef2584c80ea87f253204fd001d
   languageName: node
   linkType: hard
 
@@ -3879,6 +3893,7 @@ __metadata:
     eslint-plugin-typescript-sort-keys: ^2.3.0
     eslint-plugin-unused-imports: ^3.0.0
     prettier: ^3.0.0
+    tsconfig: "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -6616,7 +6631,7 @@ __metadata:
     "@commitlint/cli": ^17.6.7
     "@commitlint/config-angular": ^17.6.7
     "@commitlint/config-conventional": ^17.6.7
-    "@turbo/gen": ^1.10.11
+    "@turbo/gen": ^1.10.12
     "@types/eslint": ^8
     "@types/node": ^18.17.0
     eslint: ^8.45.0
@@ -6625,7 +6640,7 @@ __metadata:
     lint-staged: ^13.2.3
     prettier: ^3.0.0
     tsup: ^7.1.0
-    turbo: ^1.10.11
+    turbo: ^1.10.12
     typescript: ^5.1.6
   languageName: unknown
   linkType: soft
@@ -9747,7 +9762,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsconfig@workspace:packages/tsconfig":
+"tsconfig@workspace:^, tsconfig@workspace:packages/tsconfig":
   version: 0.0.0-use.local
   resolution: "tsconfig@workspace:packages/tsconfig"
   languageName: unknown
@@ -9861,58 +9876,58 @@ __metadata:
   languageName: node
   linkType: hard
 
-"turbo-darwin-64@npm:1.10.11":
-  version: 1.10.11
-  resolution: "turbo-darwin-64@npm:1.10.11"
+"turbo-darwin-64@npm:1.10.12":
+  version: 1.10.12
+  resolution: "turbo-darwin-64@npm:1.10.12"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-darwin-arm64@npm:1.10.11":
-  version: 1.10.11
-  resolution: "turbo-darwin-arm64@npm:1.10.11"
+"turbo-darwin-arm64@npm:1.10.12":
+  version: 1.10.12
+  resolution: "turbo-darwin-arm64@npm:1.10.12"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo-linux-64@npm:1.10.11":
-  version: 1.10.11
-  resolution: "turbo-linux-64@npm:1.10.11"
+"turbo-linux-64@npm:1.10.12":
+  version: 1.10.12
+  resolution: "turbo-linux-64@npm:1.10.12"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-linux-arm64@npm:1.10.11":
-  version: 1.10.11
-  resolution: "turbo-linux-arm64@npm:1.10.11"
+"turbo-linux-arm64@npm:1.10.12":
+  version: 1.10.12
+  resolution: "turbo-linux-arm64@npm:1.10.12"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo-windows-64@npm:1.10.11":
-  version: 1.10.11
-  resolution: "turbo-windows-64@npm:1.10.11"
+"turbo-windows-64@npm:1.10.12":
+  version: 1.10.12
+  resolution: "turbo-windows-64@npm:1.10.12"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-windows-arm64@npm:1.10.11":
-  version: 1.10.11
-  resolution: "turbo-windows-arm64@npm:1.10.11"
+"turbo-windows-arm64@npm:1.10.12":
+  version: 1.10.12
+  resolution: "turbo-windows-arm64@npm:1.10.12"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo@npm:^1.10.11":
-  version: 1.10.11
-  resolution: "turbo@npm:1.10.11"
+"turbo@npm:^1.10.12":
+  version: 1.10.12
+  resolution: "turbo@npm:1.10.12"
   dependencies:
-    turbo-darwin-64: 1.10.11
-    turbo-darwin-arm64: 1.10.11
-    turbo-linux-64: 1.10.11
-    turbo-linux-arm64: 1.10.11
-    turbo-windows-64: 1.10.11
-    turbo-windows-arm64: 1.10.11
+    turbo-darwin-64: 1.10.12
+    turbo-darwin-arm64: 1.10.12
+    turbo-linux-64: 1.10.12
+    turbo-linux-arm64: 1.10.12
+    turbo-windows-64: 1.10.12
+    turbo-windows-arm64: 1.10.12
   dependenciesMeta:
     turbo-darwin-64:
       optional: true
@@ -9928,7 +9943,7 @@ __metadata:
       optional: true
   bin:
     turbo: bin/turbo
-  checksum: caa5f4e6e6f9b340e8b44424d83b5e9b1ad478ae646d3a5cb6784dc68c420e0237a7e293e6ac7ab5776fad9d08bf886bcecb898a69f7bfb151d3446fa885ec3f
+  checksum: 266b70404e149b92cd64051fcdd03c56b474ed22f6bd11cf4cf1b70f55c72f9a2aaa90109b19b95e43d68e53a6be54485f0cc0135c8d5b505db09fd126a34052
   languageName: node
   linkType: hard
 

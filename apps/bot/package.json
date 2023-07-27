@@ -31,6 +31,7 @@
     "eslint-config-tempo": "workspace:^",
     "nodemon": "^3.0.1",
     "tsc-alias": "^1.8.7",
+    "tsconfig": "workspace:^",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6"
   },

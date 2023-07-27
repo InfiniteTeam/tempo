@@ -1,29 +1,40 @@
-FROM node:18 AS Builder
+FROM node:18-alpine AS builder
+
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
+RUN apk update
+
+WORKDIR /app
+RUN yarn global add turbo
+COPY . .
+RUN turbo prune --scope=bot --docker
+
+FROM node:18-alpine AS installer
+RUN apk add --no-cache libc6-compat
+RUN apk update
+WORKDIR /app
+
+COPY .gitignore .gitignore
+COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/out/yarn.lock ./yarn.lock
+COPY --from=builder /app/.yarnrc.yml ./.yarnrc.yml
+COPY --from=builder /app/.yarn/ ./.yarn/
+
+RUN yarn install
+
+COPY --from=builder /app/out/full/ .
+COPY turbo.json turbo.json
+COPY tsconfig.json tsconfig.json
+COPY tsup.config.ts tsup.config.ts
+
+RUN yarn turbo run build --filter=bot...
+
+FROM node:18-alpine AS runner
+
+RUN apk add --no-cache bash git openssh python3 build-base libc6-compat
 
 WORKDIR /app
 
-COPY package.json ./
-COPY turbo.json ./
-COPY yarn.lock ./
-COPY .yarnrc.yml ./
-COPY tsup.config.ts ./
-COPY .yarn/ ./.yarn/
+COPY --from=installer /app .
 
-COPY apps/bot/package.json ./apps/bot/package.json
-
-COPY packages/ ./packages/
-
-RUN yarn install --inline-builds
-
-COPY apps/bot ./apps/bot/
-
-RUN yarn build --filter=bot
-
-FROM node:18-alpine AS Server
-
-WORKDIR /app
-
-COPY --from=Builder /app/apps/bot/dist/ ./dist
-COPY --from=Builder /app/apps/bot/package.json .
-
-CMD ["node", "./dist/index.js"]
+CMD yarn workspace bot start:node
