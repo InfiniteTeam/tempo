@@ -12,7 +12,7 @@ export class DatabaseClient extends PrismaClient {
     this.logger = new Logger('Database', { logPath: options.loggerPath })
 
     // @ts-ignore
-    this.redis = new Redis(options.redis ?? process.env.REDIS_URL ? { hostname: 'cache' } : undefined)
+    this.redis = new Redis(options.redis ?? process.env.REDIS_URL ?? 'redis://cache:6379')
 
     this.$connect().then(() => {
       this.logger.info('Connected to Prisma')

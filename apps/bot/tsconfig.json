@@ -8,7 +8,7 @@
     "preserveConstEnums": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "Node",
     "skipLibCheck": true,
     "outDir": "./dist",
     "baseUrl": "src",

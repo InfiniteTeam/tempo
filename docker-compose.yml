@@ -13,10 +13,13 @@ services:
     environment:
       - SHELL=bash
       - NODE_ENV=production
-      - DATABASE_URL=postgresql://postgres:helloworld@database/tempo
+      - DATABASE_URL=postgresql://postgres:helloworld@database:5432/tempo
       - REDIS_URL=redis://cache:6379
     env_file:
       - .env
+    depends_on:
+      - database
+      - cache
     networks:
       - tempo
     build:
@@ -28,6 +31,9 @@ services:
     container_name: tempo-db
     environment:
       POSTGRES_PASSWORD: helloworld
+      POSTGRES_DB: tempo
+    ports:
+      - 5432:5432
     networks:
       - tempo
     volumes:
@@ -35,6 +41,7 @@ services:
     restart: always
 
   cache:
+    container_name: tempo-cache
     image: 'docker.dragonflydb.io/dragonflydb/dragonfly'
     ulimits:
       memlock: -1
