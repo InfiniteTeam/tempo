@@ -19,7 +19,7 @@ export const setupSchedule = (client: BotClient) => {
   const messageManager = new MessageManager(client)
   // At 1 minutes past the hour
   scheduleJob('1 * * * *', async () => {
-    await messageManager.saveMessageCounts()
+    await messageManager.saveMessageLog()
   })
 
   // 	Every 5 minutes

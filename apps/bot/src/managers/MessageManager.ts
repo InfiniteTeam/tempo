@@ -5,15 +5,22 @@ import { Logger } from '@tempo/utils'
 
 export default class MessageManager extends BaseManager {
   static getRedisKey(type: 'log', targetDate?: Date): string
-  static getRedisKey(type: 'log', data?: Date) {
-    if (type === 'log') {
+  static getRedisKey(type: 'count', userId: string): string
+  static getRedisKey(type: 'log' | 'count', data?: Date | string) {
+    if (type === 'log' && typeof data === 'object') {
       const date = data ?? new Date()
       return `tempo-message-log:${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${date.getHours()}`
     }
+
+    if (type === 'count' && typeof data === 'string') {
+      return `tempo-message-count:${data}`
+    }
   }
   static getRedisExpire(type: 'log'): number
-  static getRedisExpire(type: 'log') {
+  static getRedisExpire(type: 'count'): number
+  static getRedisExpire(type: 'log' | 'count') {
     if (type === 'log') return 60 * 60 * 3
+    if (type === 'count') return 60 * 60
   }
 
   logger = new Logger('MessageManager')
@@ -34,7 +41,7 @@ export default class MessageManager extends BaseManager {
    * - It will be called by cron (every 1 hour).
    * - Save all user's message count in last hour to postgresdb.
    */
-  async saveMessageCounts() {
+  async saveMessageLog() {
     await this.client.db.redis.expire(
       MessageManager.getRedisKey('log'),
       MessageManager.getRedisExpire('log')
