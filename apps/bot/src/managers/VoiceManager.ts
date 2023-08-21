@@ -170,7 +170,39 @@ export default class VoiceManager extends BaseManager {
     if (todaySum[0]) today = todaySum[0]._sum.value
     if (allSum[0]) all = allSum[0]._sum.value
 
-    return { current, today, all }
+    const oneWeekAgo = new Date()
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7)
+    const oneWeekSum = await this.client.db.voiceCount.groupBy({
+      by: ['userId', 'time'],
+      _sum: {
+        value: true
+      },
+      where: {
+        time: {
+          gte: oneWeekAgo,
+          lte: tomorrowDate
+        },
+        userId
+      }
+    })
+
+    let bestTime = 0
+    let bestTimeDate = null
+
+    if (oneWeekSum[0]) {
+      bestTime = oneWeekSum[0]._sum.value!
+      bestTimeDate = oneWeekSum[0].time // 시간이 기록된 날짜
+    }
+
+    return {
+      current,
+      today,
+      all,
+      best: {
+        time: bestTime,
+        date: bestTimeDate
+      }
+    }
   }
 
   async getAllVoiceLogByDate(

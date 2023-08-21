@@ -10,9 +10,10 @@ export default new Event('messageCreate', async (client, message) => {
   const messageManager = new MessageManager(client)
 
   if (message.author.bot) return
-  if (!message.inGuild()) return
 
-  messageManager.incrUserMessageCount(message.author.id)
+  await messageManager.incrUserMessageCount(message.author.id)
+
+  if (!message.inGuild()) return
 
   if (!message.content.startsWith(client.config.bot.prefix)) return
 

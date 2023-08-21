@@ -3,14 +3,14 @@ import VoiceManager from '@managers/VoiceManager'
 import { BaseCommand } from '@structures/Command'
 import Embed from '@utils/Embed'
 import { formatSeconds } from '@utils/Utils'
-import { SlashCommandBuilder } from 'discord.js'
+import { SlashCommandBuilder, inlineCode } from 'discord.js'
 
 export default new BaseCommand(
   {
     name: 'vouce-count',
     aliases: ['통계', '통게']
   },
-  async (client, message, args) => {
+  async (client, message, _args) => {
     const voiceManager = new VoiceManager(client)
     const mentionUser = message.mentions.users.first()
 
@@ -24,7 +24,7 @@ export default new BaseCommand(
       ]
     })
 
-    const { current, today, all } = await voiceManager.getCurrentVoiceLog(
+    const { current, today, all, best } = await voiceManager.getCurrentVoiceLog(
       mentionUser ? mentionUser.id : message.author.id
     )
     const embed = new Embed(client, 'info')
@@ -33,27 +33,47 @@ export default new BaseCommand(
           ? `${mentionUser.username}님의 통화방 사용시간`
           : '통화방 사용시간'
       )
-      .setDescription('30초 미만의 짧은 사용은 저장되지 않습니다.')
+      .setDescription(
+        '### :warning: 주의사항\n30초 미만의 짧은 사용은 저장되지 않습니다.'
+      )
+      .setFooter({ text: '해당 통계는 2023년 7월 27일부로 집계된 내용입니다.' })
+
     if (all) {
       embed.addFields({
-        name: `전체 사용시간: \`${formatSeconds(all)}\``,
-        value: '통화방 사용시간 측정 이후 통화방에 있었던 시간이에요.'
+        name: `> 전체 사용시간:`,
+        value: inlineCode(formatSeconds(all)),
+        inline: true
       })
     }
 
     if (today) {
       embed.addFields({
-        name: `오늘 사용시간: \`${formatSeconds(today)}\``,
-        value: `오늘 하루동안 사용한 시간이에요.${
+        name: `> 오늘 사용시간 ${
           current ? ' (현재 사용시간은 포함되지 않습니다)' : ''
-        }`
+        }`,
+        value: inlineCode(formatSeconds(today)),
+        inline: true
       })
     }
 
     if (current) {
       embed.addFields({
-        name: `현재 통화방 사용시간: \`${formatSeconds(current)}\``,
-        value: '연속해서 통화방을 사용한 시간이에요.'
+        name: `> 현재 통화방 사용시간`,
+        value: inlineCode(formatSeconds(current)),
+        inline: true
+      })
+    }
+
+    if (best) {
+      embed.addFields({
+        name: `> 주간 최대 통화방 사용시간`,
+        value: `${inlineCode(formatSeconds(best.time))} (${Intl.DateTimeFormat(
+          'ko',
+          {
+            weekday: 'long'
+          }
+        ).format(best.date ?? new Date())})`,
+        inline: true
       })
     }
 
@@ -125,34 +145,52 @@ export default new BaseCommand(
           ]
         })
 
-        const { current, today, all } = await voiceManager.getCurrentVoiceLog(
-          user ? user.id : interaction.user.id
-        )
+        const { current, today, all, best } =
+          await voiceManager.getCurrentVoiceLog(
+            user ? user.id : interaction.user.id
+          )
         const embed = new Embed(client, 'info')
           .setTitle(
             user ? `${user.username}님의 통화방 사용시간` : '통화방 사용시간'
           )
-          .setDescription('30초 미만의 짧은 사용은 저장되지 않습니다.')
+          .setDescription(
+            '### :warning: 주의사항\n30초 미만의 짧은 사용은 저장되지 않습니다.'
+          )
         if (all) {
           embed.addFields({
-            name: `전체 사용시간: \`${formatSeconds(all)}\``,
-            value: '통화방 사용시간 측정 이후 통화방에 있었던 시간이에요.'
+            name: `> 전체 사용시간:`,
+            value: inlineCode(formatSeconds(all)),
+            inline: true
           })
         }
 
         if (today) {
           embed.addFields({
-            name: `오늘 사용시간: \`${formatSeconds(today)}\``,
-            value: `오늘 하루동안 사용한 시간이에요.${
+            name: `> 오늘 사용시간 ${
               current ? ' (현재 사용시간은 포함되지 않습니다)' : ''
-            }`
+            }`,
+            value: inlineCode(formatSeconds(today)),
+            inline: true
           })
         }
 
         if (current) {
           embed.addFields({
-            name: `현재 통화방 사용시간: \`${formatSeconds(current)}\``,
-            value: '연속해서 통화방을 사용한 시간이에요.'
+            name: `> 현재 통화방 사용시간`,
+            value: inlineCode(formatSeconds(current)),
+            inline: true
+          })
+        }
+
+        if (best) {
+          embed.addFields({
+            name: `> 주간 최대 통화방 사용시간`,
+            value: `${inlineCode(
+              formatSeconds(best.time)
+            )} (${Intl.DateTimeFormat('ko', {
+              weekday: 'long'
+            }).format(best.date ?? new Date())})`,
+            inline: true
           })
         }
 

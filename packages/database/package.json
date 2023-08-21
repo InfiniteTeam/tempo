@@ -25,12 +25,12 @@
     "dist"
   ],
   "devDependencies": {
-    "@prisma/client": "^5.0.0",
+    "@prisma/client": "^5.1.1",
     "eslint-config-tempo": "workspace:^",
     "ioredis": "^5.3.2",
-    "prisma": "^5.0.0",
+    "prisma": "^5.1.1",
     "tsconfig": "workspace:^",
-    "tsup": "^7.1.0"
+    "tsup": "^7.2.0"
   },
   "engines": {
     "node": ">=18"

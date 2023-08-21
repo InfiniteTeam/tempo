@@ -1,4 +1,10 @@
-import { Client, ClientOptions, ClientEvents, Collection } from 'discord.js'
+import {
+  Client,
+  ClientOptions,
+  ClientEvents,
+  Collection,
+  ActivityType
+} from 'discord.js'
 import { config as dotenvConfig } from 'dotenv'
 import * as Dokdo from 'dokdo'
 
@@ -78,7 +84,11 @@ export default class BotClient extends Client {
       logger.warn('Changed status to Developent mode')
       this.user?.setPresence({
         activities: [
-          { name: `${this.config.bot.prefix}help | ${this.VERSION} : ${name}` }
+          {
+            name: `${this.config.bot.prefix}help | ${this.VERSION} : ${name}`,
+            type: ActivityType.Custom,
+            state: '🚀'
+          }
         ],
         status: 'dnd'
       })
@@ -87,7 +97,11 @@ export default class BotClient extends Client {
 
       this.user?.setPresence({
         activities: [
-          { name: `${this.config.bot.prefix}help | ${this.VERSION}` }
+          {
+            name: `${this.config.bot.prefix}help | ${this.VERSION}`,
+            type: ActivityType.Custom,
+            state: '🚀'
+          }
         ],
         status: 'online'
       })
