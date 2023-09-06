@@ -3,17 +3,20 @@ import BaseManager from './BaseManager.js'
 import { Prisma } from '@tempo/database'
 import { Logger } from '@tempo/utils'
 
+/**
+ * @private 버그가 많아 방치중인 코드
+ */
 export default class MessageManager extends BaseManager {
   static getRedisKey(type: 'log', targetDate?: Date): string
   static getRedisKey(type: 'count', userId: string): string
   static getRedisKey(type: 'log' | 'count', data?: Date | string) {
     if (type === 'log' && typeof data === 'object') {
       const date = data ?? new Date()
-      return `tempo-message-log:${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${date.getHours()}`
+      return `tempo-prod-message-log:${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${date.getHours()}`
     }
 
     if (type === 'count' && typeof data === 'string') {
-      return `tempo-message-count:${data}`
+      return `tempo-prod-message-count:${data}`
     }
   }
   static getRedisExpire(type: 'log'): number
@@ -29,10 +32,25 @@ export default class MessageManager extends BaseManager {
     super(client)
   }
 
-  async incrUserMessageCount(userId: string) {
+  private async migrateId(userId: string, guildId: string) {
+    const user = await this.client.db.user.findFirst({
+      where: {
+        userId,
+        guildId
+      }
+    })
+
+    if (!user) return
+    return user.id
+  }
+
+  async incrUserMessageCount(id: string, guildId: string) {
+    const userId = await this.migrateId(id, guildId)
+    if (!userId) return
+
     await this.client.db.redis.hincrby(
       MessageManager.getRedisKey('log'),
-      userId,
+      `${guildId}:${userId}`,
       1
     )
   }
@@ -56,18 +74,21 @@ export default class MessageManager extends BaseManager {
         MessageManager.getRedisKey('log', targetDate),
         0
       )
+
       const [_coursor, elements] = scanned
       const users = await this.client.db.user.findMany({
-        select: { id: true }
+        select: { userId: true, guildId: true }
       })
-      const userIds = users.map(({ id }) => id)
+      const userIds = users.map(({ userId }) => userId)
 
       for (let i = 0; i < elements.length; i += 2) {
-        if (!userIds.includes(elements[i])) continue
+        const [guildId, userId] = elements[i].split(':')
+        if (!userIds.includes(userId)) continue
 
         createManyData.push({
-          userId: elements[i],
+          userId,
           count: parseInt(elements[i + 1]),
+          guildId,
           time: targetDate
         })
       }
@@ -81,7 +102,9 @@ export default class MessageManager extends BaseManager {
     }
   }
 
-  async messageLogSummary(userId: string) {
+  async messageLogSummary(id: string, guildId: string) {
+    const userId = await this.migrateId(id, guildId)
+    if (!userId) return
     let today: number | null = null
     let all: number | null = null
 
@@ -101,7 +124,8 @@ export default class MessageManager extends BaseManager {
           gte: todayDate,
           lte: tomorrowDate
         },
-        userId
+        userId,
+        guildId
       }
     })
 
@@ -111,7 +135,8 @@ export default class MessageManager extends BaseManager {
         count: true
       },
       where: {
-        userId
+        userId,
+        guildId
       }
     })
 
@@ -121,7 +146,10 @@ export default class MessageManager extends BaseManager {
     return { today, all }
   }
 
-  async allMessageLogByYear(userId: string, year: number) {
+  async allMessageLogByYear(id: string, guildId: string, year: number) {
+    const userId = await this.migrateId(id, guildId)
+    if (!userId) return
+
     const monthFirst = new Date()
     monthFirst.setFullYear(year)
     monthFirst.setMonth(0)
@@ -137,6 +165,7 @@ export default class MessageManager extends BaseManager {
     SELECT CAST(SUM(count) as int4) AS count, CAST(time as date)
     FROM "MessageCount"
     WHERE "userId"=${userId}
+      AND "guildId"=${guildId}
       AND "time" >= ${monthFirst}
       AND "time" <= ${monthSecond}
     GROUP BY CAST(time as date)

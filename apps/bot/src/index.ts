@@ -1,6 +1,9 @@
 import 'dotenv/config'
 import config from './config.js'
 import chalk from 'chalk'
+import * as Sentry from '@sentry/node'
+
+Sentry.init(config.sentry)
 
 const main = async () => {
   console.log(

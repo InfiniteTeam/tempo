@@ -5,6 +5,7 @@ import { Logger } from '@tempo/utils'
 import { v4 } from 'uuid'
 import { ErrorReportOptions } from '@types'
 import BotClient from '@structures/BotClient'
+import * as Sentry from '@sentry/node'
 
 import config from '../config.js'
 import { ReportType } from '@utils/Constants'
@@ -22,11 +23,22 @@ export default class ErrorManager extends BaseManager {
   }
 
   public report(error: Error, options?: ErrorReportOptions) {
+    const errorCode = v4()
+
     this.logger.error(error.stack as string)
 
-    const date = (Number(new Date()) / 1000) | 0
-    const errorText = `**[<t:${date}:T> ERROR]** ${error.stack}`
-    const errorCode = v4()
+    Sentry.captureException(error, {
+      user: {
+        username: options?.executer?.member?.id,
+        email: options?.executer?.guildId
+      },
+      requestSession: {
+        status: 'errored'
+      },
+      tags: {
+        code: errorCode
+      }
+    })
 
     this.client.errors.set(errorCode, error.stack as string)
 
@@ -41,23 +53,5 @@ export default class ErrorManager extends BaseManager {
       ? // @ts-ignore
         options.executer?.reply({ embeds: [errorEmbed] })
       : null
-
-    if (config.report.type === ReportType.Webhook) {
-      const webhook = new WebhookClient({
-        url: config.report.webhook.url
-      })
-
-      webhook.send(errorText)
-    } else if (config.report.type === ReportType.Text) {
-      const guild = this.client.guilds.cache.get(
-        config.report.text.guildID
-      ) as Guild
-      const channel = guild.channels.cache.get(config.report.text.channelID)
-
-      if (!channel?.isTextBased())
-        return new TypeError('Channel is not text channel')
-
-      channel.send(errorText)
-    }
   }
 }

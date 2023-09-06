@@ -27,5 +27,5 @@
     "resolveFullPaths": true
   },
   "include": ["./src/**/*.ts"],
-  "exclude": ["./src/**/example.config.ts", "./dist/*"]
+  "exclude": ["./dist/*"]
 }

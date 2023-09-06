@@ -1,6 +1,7 @@
 import { BaseCommand } from '@structures/Command'
 import Embed from '@utils/Embed'
 import { formatSeconds } from '@utils/Utils'
+import { ActionRowBuilder, StringSelectMenuBuilder } from 'discord.js'
 
 export default new BaseCommand(
   {
@@ -9,13 +10,20 @@ export default new BaseCommand(
   },
   async (client, message, args) => {
     const embed = new Embed(client, 'info').setTitle('잠시만 기다려주세요...')
-
+    const row = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+      new StringSelectMenuBuilder()
+        .setCustomId('leaderboard')
+        .setPlaceholder('')
+    )
     const msg = await message.reply({
       embeds: [embed]
     })
 
     const data = await client.db.voiceCount.groupBy({
       by: ['userId'],
+      where: {
+        guildId: message.guildId
+      },
       _sum: {
         value: true
       }

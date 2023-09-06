@@ -67,9 +67,9 @@
     "db:generate": {
       "cache": false
     },
-    "db:push": {
-      "cache": false
-    },
+    "db:migrate:deploy": {},
+    "db:push": {},
+    "db:seed": {},
     "studio": {
       "cache": false
     }

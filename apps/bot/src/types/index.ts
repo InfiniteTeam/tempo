@@ -10,6 +10,7 @@ import {
   ShardingManagerOptions
 } from 'discord.js'
 import { ReportType } from '@utils/Constants'
+import { NodeOptions } from '@sentry/node'
 
 export interface ErrorReportOptions {
   executer?:
@@ -30,6 +31,7 @@ export type IConfig = {
   name: string
   githubToken?: string
   repository?: string
+  sentry: NodeOptions
 } & { bot: BotConfig } & {
   report: ErrorReportConfig
 }

@@ -1,6 +1,7 @@
 import { execSync } from 'child_process'
 import { IConfig } from '@types'
 import { ReportType } from './utils/Constants.js'
+import { ActivityType } from 'discord.js'
 
 const config: IConfig = {
   BUILD_NUMBER: execSync('git rev-parse --short HEAD').toString().trim(),
@@ -8,15 +9,39 @@ const config: IConfig = {
   channelId: '',
   githubToken: '',
   name: 'Tempo',
+  sentry: {
+    dsn: process.env.SENTRY_DSN,
+
+    tracesSampleRate: 1.0
+  },
   bot: {
     sharding: false,
     options: {
-      intents: [130815],
-      allowedMentions: { parse: ['users', 'roles'], repliedUser: false }
+      intents: [
+        'GuildMembers',
+        'GuildPresences',
+        'MessageContent',
+        'DirectMessages',
+        'GuildVoiceStates',
+        'GuildIntegrations',
+        'Guilds',
+        'GuildMessages'
+      ],
+      allowedMentions: { parse: ['users', 'roles'], repliedUser: false },
+      presence: {
+        status: 'dnd',
+        activities: [
+          {
+            name: '🚀 Launching...',
+            type: ActivityType.Custom,
+            state: '🚀 Launching...'
+          }
+        ]
+      }
     },
-    token: '',
+    token: process.env.BOT_TOKEN ?? '',
     owners: [],
-    prefix: '!',
+    prefix: process.env.BOT_PREFIX ?? '!',
     cooldown: 2000
   },
   report: {

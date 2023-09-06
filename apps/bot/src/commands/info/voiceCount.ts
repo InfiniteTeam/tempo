@@ -24,9 +24,21 @@ export default new BaseCommand(
       ]
     })
 
-    const { current, today, all, best } = await voiceManager.getCurrentVoiceLog(
-      mentionUser ? mentionUser.id : message.author.id
+    const staticData = await voiceManager.getCurrentVoiceLog(
+      mentionUser ? mentionUser.id : message.author.id,
+      message.guildId
     )
+
+    if (!staticData)
+      return msg.edit({
+        embeds: [
+          new Embed(client, 'error').setTitle(
+            '해당유저는 Tempo 서비스에 등록을 안했네요!'
+          )
+        ]
+      })
+
+    const { current, today, all, best } = staticData
     const embed = new Embed(client, 'info')
       .setTitle(
         mentionUser
@@ -145,10 +157,22 @@ export default new BaseCommand(
           ]
         })
 
-        const { current, today, all, best } =
-          await voiceManager.getCurrentVoiceLog(
-            user ? user.id : interaction.user.id
-          )
+        const staticData = await voiceManager.getCurrentVoiceLog(
+          user ? user.id : interaction.user.id,
+          interaction.guildId!
+        )
+
+        if (!staticData)
+          return interaction.editReply({
+            embeds: [
+              new Embed(client, 'error').setTitle(
+                '해당유저는 Tempo 서비스에 등록을 안했네요!'
+              )
+            ]
+          })
+
+        const { current, today, all, best } = staticData
+
         const embed = new Embed(client, 'info')
           .setTitle(
             user ? `${user.username}님의 통화방 사용시간` : '통화방 사용시간'
@@ -215,9 +239,22 @@ export default new BaseCommand(
           ]
         })
 
-        const { today, all } = await messageManager.messageLogSummary(
-          user ? user.id : interaction.user.id
+        const staticData = await messageManager.messageLogSummary(
+          user ? user.id : interaction.user.id,
+          interaction.guildId ?? '0'
         )
+
+        if (!staticData)
+          return interaction.editReply({
+            embeds: [
+              new Embed(client, 'error').setTitle(
+                '해당유저는 Tempo 서비스에 등록을 안했네요!'
+              )
+            ]
+          })
+
+        const { today, all } = staticData
+
         const embed = new Embed(client, 'info')
           .setTitle(user ? `${user.username}님의 메세지 통계` : '메세지 통계')
           .setDescription('30초 미만의 짧은 사용은 저장되지 않습니다.')

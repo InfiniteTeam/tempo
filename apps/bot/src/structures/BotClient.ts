@@ -87,7 +87,7 @@ export default class BotClient extends Client {
           {
             name: `${this.config.bot.prefix}help | ${this.VERSION} : ${name}`,
             type: ActivityType.Custom,
-            state: '🚀'
+            state: '⛔ 점검중...'
           }
         ],
         status: 'dnd'
@@ -100,7 +100,7 @@ export default class BotClient extends Client {
           {
             name: `${this.config.bot.prefix}help | ${this.VERSION}`,
             type: ActivityType.Custom,
-            state: '🚀'
+            state: `🚀 Launched!`
           }
         ],
         status: 'online'

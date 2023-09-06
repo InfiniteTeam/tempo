@@ -6,16 +6,41 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model User {
-  id String @id
+  id      String @id @default(cuid())
+  userId  String
+  guildId String
 
-  voice         VoiceCount[]
-  message       MessageCount[]
-  ActivityCount ActivityCount[]
+  guild    Guild           @relation(fields: [guildId], references: [id])
+  voice    VoiceCount[]
+  message  MessageCount[]
+  activity ActivityCount[]
+}
+
+model Guild {
+  id       String  @id
+  archived Boolean @default(false)
+
+  user     User[]
+  voice    VoiceCount[]
+  message  MessageCount[]
+  settings GuildSettings?
+}
+
+model GuildSettings {
+  id    String @id
+  guild Guild  @relation(fields: [id], references: [id])
+
+  allUserRegister Boolean @default(false)
+
+  voiceCount    Boolean @default(true)
+  messageCount  Boolean @default(false)
+  activityCount Boolean @default(false)
 }
 
 model VoiceCount {
@@ -23,19 +48,25 @@ model VoiceCount {
   channelName String   @default("")
   value       Int
   userId      String
-  user        User     @relation(fields: [userId], references: [id])
+  guildId     String
 
-  @@unique([userId, time])
+  guild Guild @relation(fields: [guildId], references: [id])
+  user  User  @relation(fields: [userId], references: [id])
+
+  @@unique([userId, guildId, time])
   @@index([time(sort: Desc)])
 }
 
 model MessageCount {
-  time   DateTime @default(now()) @db.Timestamptz()
-  userId String
-  count  Int
-  user   User     @relation(fields: [userId], references: [id])
+  time    DateTime @default(now()) @db.Timestamptz()
+  userId  String
+  guildId String
+  count   Int
 
-  @@unique([userId, time])
+  guild Guild @relation(fields: [guildId], references: [id])
+  user  User  @relation(fields: [userId], references: [id])
+
+  @@unique([userId, guildId, time])
   @@index([time(sort: Desc)])
 }
 

@@ -5,13 +5,18 @@ import type { MessageCommand } from '@structures/Command'
 import MessageManager from '@managers/MessageManager'
 
 export default new Event('messageCreate', async (client, message) => {
+  if (message.guildId === '831737463571349536') return
+
   const commandManager = new CommandManager(client)
   const errorManager = new ErrorManager(client)
   const messageManager = new MessageManager(client)
 
   if (message.author.bot) return
 
-  await messageManager.incrUserMessageCount(message.author.id)
+  await messageManager.incrUserMessageCount(
+    message.author.id,
+    message.guildId ?? '0'
+  )
 
   if (!message.inGuild()) return
 

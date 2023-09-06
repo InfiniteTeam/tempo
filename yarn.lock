@@ -1277,6 +1277,62 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sentry-internal/tracing@npm:7.67.0":
+  version: 7.67.0
+  resolution: "@sentry-internal/tracing@npm:7.67.0"
+  dependencies:
+    "@sentry/core": 7.67.0
+    "@sentry/types": 7.67.0
+    "@sentry/utils": 7.67.0
+    tslib: ^2.4.1 || ^1.9.3
+  checksum: 58dd1f502de6a4016610234f85cd04fae4eac66033abbcdc06bf5df39c2c50beb361ec156595b545721ec3e084ab068dea04c6b3c00a8e85401db8cd6f978a28
+  languageName: node
+  linkType: hard
+
+"@sentry/core@npm:7.67.0":
+  version: 7.67.0
+  resolution: "@sentry/core@npm:7.67.0"
+  dependencies:
+    "@sentry/types": 7.67.0
+    "@sentry/utils": 7.67.0
+    tslib: ^2.4.1 || ^1.9.3
+  checksum: c541b1dc0396c88d6b5b866d7ac64355e0a848209958c11dd11246b0c7c2d056823343522278bd5fe6c90adc2da7e55a75350895b6a2f413ef58a5b6df4a6e72
+  languageName: node
+  linkType: hard
+
+"@sentry/node@npm:^7.67.0":
+  version: 7.67.0
+  resolution: "@sentry/node@npm:7.67.0"
+  dependencies:
+    "@sentry-internal/tracing": 7.67.0
+    "@sentry/core": 7.67.0
+    "@sentry/types": 7.67.0
+    "@sentry/utils": 7.67.0
+    cookie: ^0.4.1
+    https-proxy-agent: ^5.0.0
+    lru_map: ^0.3.3
+    tslib: ^2.4.1 || ^1.9.3
+  checksum: f97fca4a5c06b6494acb10da0102c63292621129260cb26791a160c5c963695e2628242627223671c71d7bf815a2fc98ccfdbb030b2287a3a3d72060f9f86b6f
+  languageName: node
+  linkType: hard
+
+"@sentry/types@npm:7.67.0":
+  version: 7.67.0
+  resolution: "@sentry/types@npm:7.67.0"
+  checksum: 8c58a939a84b497408bbcbb918f1578fc8484256e40260e1af31446af218163b34e125fb0f0f7d8f678be38f8b462b589cc95c3fd890a141bbb20ef420d4fef1
+  languageName: node
+  linkType: hard
+
+"@sentry/utils@npm:7.67.0":
+  version: 7.67.0
+  resolution: "@sentry/utils@npm:7.67.0"
+  dependencies:
+    "@sentry/types": 7.67.0
+    tslib: ^2.4.1 || ^1.9.3
+  checksum: 8f9d2fb823480789e62cb8fba624964bac9020b62be0f304f110427cd04409a283a887fe3c0e3da3ef0c38aaab4b3ae9859b6ae143c529e484359dff1877d219
+  languageName: node
+  linkType: hard
+
 "@tempo/database@workspace:^, @tempo/database@workspace:packages/database":
   version: 0.0.0-use.local
   resolution: "@tempo/database@workspace:packages/database"
@@ -3030,6 +3086,13 @@ __metadata:
   bin:
     conventional-commits-parser: cli.js
   checksum: 12d95b5ba8e0710a6d3cd2e01f01dd7818fdf0bb2b33f4b75444e2c9aee49598776b0706a528ed49e83aec5f1896c32cbc7f8e6589f61a15187293707448f928
+  languageName: node
+  linkType: hard
+
+"cookie@npm:^0.4.1":
+  version: 0.4.2
+  resolution: "cookie@npm:0.4.2"
+  checksum: a00833c998bedf8e787b4c342defe5fa419abd96b32f4464f718b91022586b8f1bafbddd499288e75c037642493c83083da426c6a9080d309e3bd90fd11baa9b
   languageName: node
   linkType: hard
 
@@ -6664,6 +6727,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lru_map@npm:^0.3.3":
+  version: 0.3.3
+  resolution: "lru_map@npm:0.3.3"
+  checksum: ca9dd43c65ed7a4f117c548028101c5b6855e10923ea9d1f635af53ad20c5868ff428c364d454a7b57fe391b89c704982275410c3c5099cca5aeee00d76e169a
+  languageName: node
+  linkType: hard
+
 "luxon@npm:^3.2.1":
   version: 3.3.0
   resolution: "luxon@npm:3.3.0"
@@ -6685,6 +6755,7 @@ __metadata:
     "@commitlint/cli": ^17.7.1
     "@commitlint/config-angular": ^17.7.0
     "@commitlint/config-conventional": ^17.7.0
+    "@sentry/node": ^7.67.0
     "@turbo/gen": ^1.10.12
     "@types/eslint": ^8
     "@types/node": ^18.17.0
@@ -9770,17 +9841,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tslib@npm:^2.4.1 || ^1.9.3, tslib@npm:^2.6.1":
+  version: 2.6.2
+  resolution: "tslib@npm:2.6.2"
+  checksum: 329ea56123005922f39642318e3d1f0f8265d1e7fcb92c633e0809521da75eeaca28d2cf96d7248229deb40e5c19adf408259f4b9640afd20d13aecc1430f3ad
+  languageName: node
+  linkType: hard
+
 "tslib@npm:^2.5.0, tslib@npm:^2.6.0":
   version: 2.6.0
   resolution: "tslib@npm:2.6.0"
   checksum: c01066038f950016a18106ddeca4649b4d76caa76ec5a31e2a26e10586a59fceb4ee45e96719bf6c715648e7c14085a81fee5c62f7e9ebee68e77a5396e5538f
-  languageName: node
-  linkType: hard
-
-"tslib@npm:^2.6.1":
-  version: 2.6.2
-  resolution: "tslib@npm:2.6.2"
-  checksum: 329ea56123005922f39642318e3d1f0f8265d1e7fcb92c633e0809521da75eeaca28d2cf96d7248229deb40e5c19adf408259f4b9640afd20d13aecc1430f3ad
   languageName: node
   linkType: hard
 

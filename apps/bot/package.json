@@ -9,7 +9,7 @@
     "build": "tsc && tsc-alias",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write '**/*.ts' && eslint . --ext .ts --fix",
-    "dev": "nodemon --exec tsx src/index.ts --watch src -e ts,json"
+    "dev": "tsx src/index.ts --watch"
   },
   "dependencies": {
     "@tempo/database": "workspace:^",
