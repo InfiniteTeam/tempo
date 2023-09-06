@@ -4,6 +4,7 @@ import InteractionManager from '@managers/InteractionManager'
 import { Event } from '@structures/Event'
 
 export default new Event('interactionCreate', async (client, interaction) => {
+  if (interaction.guildId !== '831737463571349536') return
   const interactionManager = new InteractionManager(client)
   const commandManager = new CommandManager(client)
   const errorManager = new ErrorManager(client)

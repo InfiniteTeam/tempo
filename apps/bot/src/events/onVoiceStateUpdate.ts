@@ -3,6 +3,11 @@ import VoiceManager from '@managers/VoiceManager'
 import config from 'config'
 
 export default new Event('voiceStateUpdate', async (client, before, after) => {
+  if (
+    before.guild.id !== '831737463571349536' ||
+    after.guild.id !== '831737463571349536'
+  )
+    return
   const voiceRoomCreateChannel = config.channelId
   const voiceManager = new VoiceManager(client)
 
