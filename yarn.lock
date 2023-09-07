@@ -1289,6 +1289,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sentry/cli@npm:^2.20.6":
+  version: 2.20.6
+  resolution: "@sentry/cli@npm:2.20.6"
+  dependencies:
+    https-proxy-agent: ^5.0.0
+    node-fetch: ^2.6.7
+    progress: ^2.0.3
+    proxy-from-env: ^1.1.0
+    which: ^2.0.2
+  bin:
+    sentry-cli: bin/sentry-cli
+  checksum: 6e694bd875233b18f320da336001aaa3c46118fb23c2b80e450f2b3d8597bdc2ef0bed8f5dde64d81c02078b58ae29b2cfac5376e752460216a32850df36de48
+  languageName: node
+  linkType: hard
+
 "@sentry/core@npm:7.67.0":
   version: 7.67.0
   resolution: "@sentry/core@npm:7.67.0"
@@ -2428,6 +2443,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bot@workspace:apps/bot"
   dependencies:
+    "@sentry/cli": ^2.20.6
     "@tempo/database": "workspace:^"
     "@types/node": ^18.15.11
     "@types/node-fetch": ^2.6.3
@@ -8360,6 +8376,13 @@ __metadata:
   version: 3.0.0
   resolution: "proc-log@npm:3.0.0"
   checksum: 02b64e1b3919e63df06f836b98d3af002b5cd92655cab18b5746e37374bfb73e03b84fe305454614b34c25b485cc687a9eebdccf0242cda8fda2475dd2c97e02
+  languageName: node
+  linkType: hard
+
+"progress@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "progress@npm:2.0.3"
+  checksum: f67403fe7b34912148d9252cb7481266a354bd99ce82c835f79070643bb3c6583d10dbcfda4d41e04bbc1d8437e9af0fb1e1f2135727878f5308682a579429b7
   languageName: node
   linkType: hard
 

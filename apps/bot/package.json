@@ -6,10 +6,11 @@
   "scripts": {
     "start": "yarn build && yarn start:node",
     "start:node": "node --enable-source-maps --experimental-specifier-resolution=node .",
-    "build": "tsc && tsc-alias",
+    "build": "tsc && tsc-alias && yarn sentry:sourcemaps",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write '**/*.ts' && eslint . --ext .ts --fix",
-    "dev": "tsx src/index.ts --watch"
+    "dev": "tsx src/index.ts --watch",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org infinite-studio-48318f76f --project tempo ./dist && sentry-cli sourcemaps upload --org infinite-studio-48318f76f --project tempo ./dist"
   },
   "dependencies": {
     "@tempo/database": "workspace:^",

@@ -1,4 +1,5 @@
 import { SlashCommand } from '@structures/Command'
+import { Prisma } from '@tempo/database'
 import Embed from '@utils/Embed'
 import { PermissionFlagsBits, SlashCommandBuilder } from 'discord.js'
 
@@ -55,6 +56,22 @@ export default new SlashCommand(
         }
       })
       .then((data) => {
+        if (setting === 'autoRegister') {
+          interaction.guild?.members.fetch().then(async (members) => {
+            const userData = members.map(
+              (member): Prisma.UserCreateManyInput => {
+                return {
+                  userId: member.id,
+                  guildId: member.guild.id
+                }
+              }
+            )
+
+            client.db.user.createMany({
+              data: userData
+            })
+          })
+        }
         return interaction.reply({
           embeds: [
             new Embed(client, 'success')
