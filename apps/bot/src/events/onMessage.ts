@@ -5,6 +5,7 @@ import type { MessageCommand } from '@structures/Command'
 import MessageManager from '@managers/MessageManager'
 
 export default new Event('messageCreate', async (client, message) => {
+  await client.eval.run(message)
   if (message.guildId === '831737463571349536') return
 
   const commandManager = new CommandManager(client)
@@ -28,8 +29,6 @@ export default new Event('messageCreate', async (client, message) => {
     .split(/ +/g)
   const commandName = args.shift()?.toLowerCase()
   const command = commandManager.get(commandName as string) as MessageCommand
-
-  await client.eval.run(message)
 
   try {
     await command?.execute(client, message, args)

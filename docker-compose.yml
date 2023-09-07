@@ -32,8 +32,6 @@ services:
     environment:
       POSTGRES_PASSWORD: helloworld
       POSTGRES_DB: tempo
-    ports:
-      - 5432:5432
     networks:
       - tempo
     volumes:
