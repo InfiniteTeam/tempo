@@ -4,13 +4,12 @@ import InteractionManager from '@managers/InteractionManager'
 import { Event } from '@structures/Event'
 
 export default new Event('interactionCreate', async (client, interaction) => {
-  if (interaction.guildId === '831737463571349536') return
-
   const interactionManager = new InteractionManager(client)
   const commandManager = new CommandManager(client)
   const errorManager = new ErrorManager(client)
 
   if (!interaction.inCachedGuild()) return
+  if (interaction.guildId === '831737463571349536') return
 
   if (interaction.isChatInputCommand()) {
     if (interaction.user.bot) return
@@ -27,6 +26,5 @@ export default new Event('interactionCreate', async (client, interaction) => {
       errorManager.report(error, { executer: interaction, isSend: true })
     }
   }
-
   interactionManager.cacheEvent(interaction)
 })

@@ -15,7 +15,10 @@ export default new Event('guildCreate', async (client, guild) => {
     .setDescription(`## 초대해주셔서 감사합니다!
 Tempo 서비스 원활한 이용을 위해 아래와 같은 내용을 자동으로 등록합니다.
 
-아래 Select Menu 를 선택하여 설정을 바굴수있어요!
+설정은 서버에에 들어가셔서 ${chatInputApplicationCommandMention(
+    '설정',
+    client.application?.commands.cache.get('설정')?.id ?? ''
+  )} 실행하면 설정을 바꿀수있어요!
 
 저장된 내용은 개인정보 처리 방침에 따라 서비스 탈퇴시 **${deleteDay}일**뒤 삭제됩니다.
 
@@ -41,19 +44,19 @@ Tempo 서비스 원활한 이용을 위해 아래와 같은 내용을 자동으�
             '서버에 접속한 모든 유저들을 Tempo 서비스에 등록합니다'
           )
           .setValue('gc.autoRegister')
-          .setEmoji(':x:'),
+          .setEmoji('❌'),
         new StringSelectMenuOptionBuilder()
           .setLabel('음성 채널 집계')
           .setDescription(
             '음성채널 접속하는 데이터를 이용하여 통계를 집계합니다.'
           )
           .setValue('gc.voiceCount')
-          .setEmoji(':white_check_mark:'),
+          .setEmoji('✅'),
         new StringSelectMenuOptionBuilder()
           .setLabel('메세지 데이터 집계')
           .setDescription('메세지 전송한 데이터를 이용하여 통계를 집계합니다.')
           .setValue('gc.messageCount')
-          .setEmoji(':x:')
+          .setEmoji('❌')
         // new StringSelectMenuOptionBuilder()
         //   .setLabel('상태, 활동 집계')
         //   .setDescription('활동 데이터를 이용하여 통계를 집계합니다.')
@@ -65,13 +68,18 @@ Tempo 서비스 원활한 이용을 위해 아래와 같은 내용을 자동으�
     data: {
       id: guild.id,
       settings: {
-        create: {}
+        connectOrCreate: {
+          create: {},
+          where: {
+            id: guild.id
+          }
+        }
       }
     }
   })
 
   owner.send({
-    embeds: [embed],
-    components: [row]
+    embeds: [embed]
+    // components: [row]
   })
 })

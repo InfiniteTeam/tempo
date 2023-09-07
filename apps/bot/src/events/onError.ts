@@ -1,10 +1,9 @@
 import { Event } from '@structures/Event'
-import { Logger } from '@tempo/utils'
+import * as Sentry from '@sentry/node'
 
-const logger = new Logger('bot')
 export default new Event('error', async (client, error) => {
+  Sentry.captureException(error)
   client.error.report(error, {
     isSend: false
   })
-  logger.error(error)
 })

@@ -25,6 +25,7 @@ services:
     build:
       context: .
       dockerfile: apps/bot/Dockerfile
+    restart: on-failure:3
 
   database:
     image: timescale/timescaledb:latest-pg13

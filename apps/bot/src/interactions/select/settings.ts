@@ -1,11 +1,12 @@
 import { SelectMenu } from '@structures/Interaction'
 import {
   ActionRowBuilder,
+  AnySelectMenuInteraction,
   StringSelectMenuBuilder,
   StringSelectMenuOptionBuilder
 } from 'discord.js'
 
-export default new SelectMenu('gc.select', async (client, interaction) => {
+export default new SelectMenu(['gc.select'], async (client, interaction) => {
   if (interaction.memberPermissions.has('ManageGuild'))
     return interaction.followUp(
       '오직 **서버 관리하기** 권한만 가진사람만 이용할수있어요!'

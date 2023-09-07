@@ -66,7 +66,7 @@ export default class InteractionManager extends BaseManager {
       return found
     }
     return this.interactions.find((_, id) => {
-      if (typeof id === 'string') id.startsWith(customId)
+      if (typeof id === 'string') customId.startsWith(id)
       this.logger.debug('FIND HIT ', customId)
       return id.includes(customId)
     })
