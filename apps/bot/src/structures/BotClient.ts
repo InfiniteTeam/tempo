@@ -9,6 +9,7 @@ import { config as dotenvConfig } from 'dotenv'
 import * as Dokdo from 'dokdo'
 
 import { Logger } from '@tempo/utils'
+import * as Sentry from '@sentry/node'
 
 import { BaseCommand } from '@types'
 import { BaseInteraction } from './Interaction.js'
@@ -74,8 +75,23 @@ export default class BotClient extends Client {
 
   public async start(token: string = config.bot.token): Promise<void> {
     logger.info('Logging in bot...')
+
     await this.login(token).then(() => {
       this.setStatus()
+    })
+
+    this.rest.on('rateLimited', (data) => {
+      Sentry.captureException(
+        new Error(`[429] RateLimited
+Retry after : ${data.timeToReset}ms
+Global rateLimited: ${data.global}
+Hash: ${data.hash}`),
+        {
+          tags: {
+            type: 'RateLimited'
+          }
+        }
+      )
     })
   }
 
