@@ -29,13 +29,13 @@ export class Logger extends BaseLogger<ILogObj> {
         '{{yyyy}}.{{mm}}.{{dd}} {{hh}}:{{MM}}:{{ss}}:{{ms}} [ {{logLevelName}} ] [ {{name}} ]  ',
       minLevel: process.env.NODE_ENV === 'development' ? LevelType.Debug : LevelType.Info,
     })
-    this.stream = createStream(options.logPath!, {
-      size: '10M',
-      interval: '1d',
-      compress: 'gzip',
-    })
-    this.attachTransport((data) => {
-      this.stream.write(JSON.stringify(data) + '\n')
-    })
-  }
+//    this.stream = createStream(options.logPath!, {
+//      size: '10M',
+//      interval: '1d',
+//      compress: 'gzip',
+//    })
+//    this.attachTransport((data) => {
+//      this.stream.write(JSON.stringify(data) + '\n')
+//    })
+//  }
 }

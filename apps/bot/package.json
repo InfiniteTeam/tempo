@@ -25,6 +25,7 @@
     "winston": "^3.10.0"
   },
   "devDependencies": {
+    "@sentry/cli": "^2.20.6",
     "@types/node": "^18.15.11",
     "@types/node-fetch": "^2.6.3",
     "@types/node-schedule": "^2",
